@@ -1,6 +1,6 @@
 # Overview
 
-<TODO: complete this with an overview of your project>
+This project will intergate an Azure Cloud Shell (CLI) envrionment and use it to build, test ,deploy and operate a Machine Learning poject.
 
 ## Project Plan
 <TODO: Project Plan
@@ -14,6 +14,11 @@
 * Architectural Diagram (Shows how key parts of the system work)>
 
 <TODO:  Instructions for running the Python project.  How could a user with no context run this project without asking you for any help.  Include screenshots with explicit steps to create that work. Be sure to at least include the following screenshots:
+### Steps 
+
+#### Initial Setup
+To set up an initial project structure in the Azure CLI, we need to create a Github repository fist.
+![azure ssh key generalisation](https://www.notion.so/Continuous-Integration-682e48ab7c2545b8889d3b9488d56837#b2872b7cb3d2449e929f67d823782450)
 
 * Project running on Azure App Service
 
