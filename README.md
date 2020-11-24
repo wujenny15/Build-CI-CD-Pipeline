@@ -15,13 +15,20 @@ This project will intergate an Azure Cloud Shell (CLI) envrionment and use it to
 
 <TODO:  Instructions for running the Python project.  How could a user with no context run this project without asking you for any help.  Include screenshots with explicit steps to create that work. Be sure to at least include the following screenshots:
 ### CI : Set Up Azure Cloud Shell
+
 :one: Create the Cloud-Based Development Environment
+
 :white_check_mark: Create a Github Repo
+
 :white_check_mark: Launch an Azure Cloud Shell environment and create ssh-keys. Upload these keys to your GitHub account.
+
 * Go to Azure Portal -> Click Azure Cloud Shell
 * Type <code> ssh-keygen -t rsa </code>to generate a key
-![SSH Keygen](./images/sshkeygen.png)
 
+![SSH Keygen](./images/sshkeygen.png)
+* cat /home/jenny/.ssh/id_rsa.pub
+* Copy the generated key and go to GitHub. Click the settings. Paste the key and set the title.
+![GitHub Setting](./images/GitHubSetting.png)
 
 * Project running on Azure App Service
 
