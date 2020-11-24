@@ -26,9 +26,17 @@ This project will intergate an Azure Cloud Shell (CLI) envrionment and use it to
 * Type <code> ssh-keygen -t rsa </code>to generate a key
 
 ![SSH Keygen](./images/sshkeygen.png)
-* cat /home/jenny/.ssh/id_rsa.pub
+* <code>cat /home/jenny/.ssh/id_rsa.pub<code>
 * Copy the generated key and go to GitHub. Click the settings. Paste the key and set the title.
 ![GitHub Setting](./images/GitHubSetting.png)
+* Go to Azure Portal, Click the Azure CLI, and clone the project.
+![Clone the project in Azure CLI](./images/GithubCloneProject.png)
+
+
+
+
+
+
 
 * Project running on Azure App Service
 
