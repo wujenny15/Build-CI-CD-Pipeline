@@ -14,11 +14,14 @@ This project will intergate an Azure Cloud Shell (CLI) envrionment and use it to
 * Architectural Diagram (Shows how key parts of the system work)>
 
 <TODO:  Instructions for running the Python project.  How could a user with no context run this project without asking you for any help.  Include screenshots with explicit steps to create that work. Be sure to at least include the following screenshots:
-### Steps 
+### CI : Set Up Azure Cloud Shell
+:one: Create the Cloud-Based Development Environment
+:white_check_mark: Create a Github Repo
+:white_check_mark: Launch an Azure Cloud Shell environment and create ssh-keys. Upload these keys to your GitHub account.
+* Go to Azure Portal -> Click Azure Cloud Shell
+* Type <code> ssh-keygen -t rsa </code>to generate a key
+![SSH Keygen](./images/sshkeygen.png)
 
-#### Initial Setup
-To set up an initial project structure in the Azure CLI, we need to create a Github repository fist.
-![azure ssh key generalisation](https://www.notion.so/Continuous-Integration-682e48ab7c2545b8889d3b9488d56837#b2872b7cb3d2449e929f67d823782450)
 
 * Project running on Azure App Service
 
