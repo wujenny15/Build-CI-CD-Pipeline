@@ -86,21 +86,19 @@ like
 az webapp up -n <your-appservice>
 az webapp config set -g <your-resource-group> -n <your-appservice> --startup-file <your-startup-file-or-command>
 ```
-![authorize app service](./images/authorizeappservice.png)
+![authorize app service](./images/authorizeapp.png)
 ![app service is ready](./images/appserviceisready.png)
 
 We have already authorized the Azure APP Service and then we want to use Azure pipelines to deploy our flask ML webapplications. To do so, we need to create a Azure DevOps Project and then establish a service connection for Azure Pipelines and Azure App Service. Here is the tutorial you can follow along.
 
 <a href ="https://docs.microsoft.com/en-us/azure/devops/pipelines/ecosystems/python-webapp?view=azure-devops&WT.mc_id=udacity_learn-wwl">Use CI/CD to deploy a Python web app to Azure App Service on Linux</a>
 
+After follow along the above tutorial, we will deploy our web app successful with Azure Pipelines. It will look like
 
-* Passing tests that are displayed after running the `make all` command from the `Makefile`
+![deploy web app with Azure Pipelines Successfully](./images/successdeploywithazurepipeline.png)
 
-* Output of a test run
-
-* Successful deploy of the project in Azure Pipelines.  [Note the official documentation should be referred to and double checked as you setup CI/CD](https://docs.microsoft.com/en-us/azure/devops/pipelines/ecosystems/python-webapp?view=azure-devops).
-
-* Running Azure App Service from Azure Pipelines automatic deployment
+If we go to the App Service, and click the URL under the Essentials Tab , we should be able to vist it. And see it is actually hosted by azure now.
+![app service](./images/appservice.png)
 
 * Successful prediction from deployed flask app in Azure Cloud Shell.  [Use this file as a template for the deployed prediction](https://github.com/udacity/nd082-Azure-Cloud-DevOps-Starter-Code/blob/master/C2-AgileDevelopmentwithAzure/project/starter_files/flask-sklearn/make_predict_azure_app.sh).
 The output should look similar to this:
@@ -110,6 +108,16 @@ udacity@Azure:~$ ./make_predict_azure_app.sh
 Port: 443
 {"prediction":[20.35373177134412]}
 ```
+
+* Passing tests that are displayed after running the `make all` command from the `Makefile`
+
+* Output of a test run
+
+
+
+* Running Azure App Service from Azure Pipelines automatic deployment
+
+
 
 * Output of streamed log files from deployed application
 
