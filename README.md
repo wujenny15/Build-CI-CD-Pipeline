@@ -31,7 +31,7 @@ This project will intergate an Azure Cloud Shell (CLI) envrionment and use it to
 ### Inspect Project File
 Since the environment is set up, we can inspect our project files and test our code locally first.
 
-We will need these four files: Makefile, requirements.txt, app.py, and make_prediction.sh.
+We will need these four files: Makefile, requirements.txt, app.py, and make_prediction.sh. ad
 
 In order to install and manage the framework and libraries in the requirements.txt easily, we will need to create a virtual environment for python.
 
