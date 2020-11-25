@@ -28,14 +28,71 @@ This project will intergate an Azure Cloud Shell (CLI) envrionment and use it to
 * `cat /home/jenny/.ssh/id_rsa.pub`
 * Copy the generated key and go to GitHub. Click the settings and paste the key.
 ![GitHub Setting](./images/GitHubSetting.png)
+### Inspect Project File
+Since the environment is set up, we can inspect our project files and test our code locally first.
+
+We will need these four files: Makefile, requirements.txt, app.py, and make_prediction.sh.
+
+In order to install and manage the framework and libraries in the requirements.txt easily, we will need to create a virtual environment for python.
+
+You can create a virtual environment like:
+
+```bash
+#Install the virtual command-line tool
+pip install virtualenv
+
+#create a virtual environment
+virtualenv ~/.udacity-devops
+```
+
+I have created the `.udacity-devops` virtual environment in my mac, so I will simply activate it. You can double check whether which python we are using by tying "which python" in your terminal.
+
+```
+source ~/.azure-devops/bin/activate
+```
+
+The python virtual env is set up, so we can install our packages or frameworks specified in the requirements.txt. We can run our commands with the help of Makefile. I really love using the Makefile, I mean who will remember all of those scripts? Simply type `make all` to install the packeages specified in the requirements.txt.
+```
+make all
+```
+
+![activate python virtual env](./images/activateenv.png)
+
+I have successfully installed all the packages and now I want to test whether I can run the app.py application and make housing prediction successfully in my local machine. This procedure is really important. 
+
+Type `Python app.py` in your terminal and run the application. 
+![Run Python app.py](./images/runpythonapp.png)  
+
+Once it is successfully, you will see Sklearn Prediction Home in your browser.
+
+![browser](./images/localhostbrowser.png)
+
+Then, we want to make sure whether we call call our ML API. We do this open another terminal and type `./make_prediction.sh` in our terminal. We will be able to see the prediction.
+
+![ml api prediction result](./images/mlapi.png)
+
+Since we get the prediction value, it means our application works perfectly on our localhost. Then we will modify the port in app.py to 443 and commit our changes to the repo.
+### Clone Project into Azure Cloud Shell
+
 * Go to Azure Portal, Click the Azure CLI, and clone the project.
 ![Clone the project in Azure CLI](./images/GithubCloneProject.png)
 
+### Project running on Azure App Service
+Azure app service is like our localhost but it is hosted in Azure. It is like black-box localhost. Azure APP service is PaaS so we do not need to specify the OS of the virtual machines and specify its configurations. So really easy to use. We simply use it to deploy our application.
 
+To start with, we need to authorize Azure APP service. You can create a APP service from Azure Portal or in the cloud shell. I will use the Portal at the moment since I want it to be more clear and easy for me to understand.
+like
+```
+az webapp up -n <your-appservice>
+az webapp config set -g <your-resource-group> -n <your-appservice> --startup-file <your-startup-file-or-command>
+```
+![authorize app service](./images/authorizeappservice.png)
+![app service is ready](./images/appserviceisready.png)
 
-* Project running on Azure App Service
+We have already authorized the Azure APP Service and then we want to use Azure pipelines to deploy our flask ML webapplications. To do so, we need to create a Azure DevOps Project and then establish a service connection for Azure Pipelines and Azure App Service. Here is the tutorial you can follow along.
 
-* Project cloned into Azure Cloud Shell
+<a href ="https://docs.microsoft.com/en-us/azure/devops/pipelines/ecosystems/python-webapp?view=azure-devops&WT.mc_id=udacity_learn-wwl">Use CI/CD to deploy a Python web app to Azure App Service on Linux</a>
+
 
 * Passing tests that are displayed after running the `make all` command from the `Makefile`
 
