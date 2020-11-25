@@ -48,7 +48,7 @@ virtualenv ~/.udacity-devops
 I have created the `.udacity-devops` virtual environment in my mac, so I will simply activate it. You can double check whether which python we are using by tying "which python" in your terminal.
 
 ```
-source ~/.azure-devops/bin/activate
+source ~/.udacity-devops/bin/activate
 ```
 
 The python virtual env is set up, so we can install our packages or frameworks specified in the requirements.txt. We can run our commands with the help of Makefile. I really love using the Makefile, I mean who will remember all of those scripts? Simply type `make all` to install the packeages specified in the requirements.txt.
@@ -100,35 +100,33 @@ After follow along the above tutorial, we will deploy our web app successful wit
 If we go to the App Service, and click the URL under the Essentials Tab , we should be able to vist it. And see it is actually hosted by azure now.
 ![app service](./images/appservice.png)
 
-* Successful prediction from deployed flask app in Azure Cloud Shell.  [Use this file as a template for the deployed prediction](https://github.com/udacity/nd082-Azure-Cloud-DevOps-Starter-Code/blob/master/C2-AgileDevelopmentwithAzure/project/starter_files/flask-sklearn/make_predict_azure_app.sh).
-The output should look similar to this:
 
-```bash
-udacity@Azure:~$ ./make_predict_azure_app.sh
-Port: 443
-{"prediction":[20.35373177134412]}
+The successful prediction from deployed flask app in Azure Cloud Shell. The output should look similar to this:
+![azure terminal output prediction](./images/azureprediction.png)
+
+### Running Azure App Service from Azure Pipelines automatic deployment
+Now that we have set up the Azure Pipelines and deploy the Flask ML application on Azure, we want to make sure if we have made any changes on our GitHub Repo, the Azure Pipelines will be triggered and run the tasks in the pipelines and then deploy the applications automatically to Azure App Service. 
+
+So, I will go to my app.py and add my heading as Continuous Delivery Test. By doing this, I want to check if I have set up my workflow correctly, after I made changes, the Azure Pipleines will be triggered and it will deploy my new changes to the App Service. 
+```python
+@app.route("/")
+def home():
+    html = "<h3>Sklearn Prediction Home (Continuous Delivery Test)</h3>"
+    return html.format(format)
 ```
 
+
+
+
+
 * Passing tests that are displayed after running the `make all` command from the `Makefile`
-
 * Output of a test run
-
-
-
-* Running Azure App Service from Azure Pipelines automatic deployment
-
-
-
 * Output of streamed log files from deployed application
-
-> 
 
 ## Enhancements
 
 <TODO: A short description of how to improve the project in the future>
 
 ## Demo 
-
 <TODO: Add link Screencast on YouTube>
-
 
