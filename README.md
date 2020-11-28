@@ -1,60 +1,62 @@
+# How to Build A CI CD Pipeline
+
 # Overview
 
 This project will start with creating a scaffolding to assist in performing Continuous Integration and Continuous Delivery. And then it will use Github Actions along with a Makefile, requirements.txt and application code to perform an initial lint, test, and install cycle. Lastly, we will integrate this project with Azure Pipelines to enable Continuous Delivery to Azure App Service.
 
-## Project Plan
-<TODO: Project Plan
+push my code to GitHub
+It detects the changes
+Azure Pipleine will be triggered to run the tasks
 
-* A link to a Trello board for the project
-* A link to a spreadsheet that includes the original and final project plan>
+To deploy to App service , a service connections should be established between these two service first.
+
+## Project Plan
+
+### Trello board
+
+[https://trello.com/b/Ua1O1dSn/create-ci-cd-pipeline](https://trello.com/b/Ua1O1dSn/create-ci-cd-pipeline)
+
+### Spreadsheet Project Plan
+
+[https://docs.google.com/spreadsheets/d/10TB6OXX8196cBgYHUD4E6tcd--r-CuljEN8CGN7dNSU/edit?usp=sharing](https://docs.google.com/spreadsheets/d/10TB6OXX8196cBgYHUD4E6tcd--r-CuljEN8CGN7dNSU/edit?usp=sharing)
 
 ## Architectural Diagram
-
 ![architecture diagram](./images/architecture.png)
+![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/Architecture.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/Architecture.png)
 
 ## CI: Set Up Azure Cloud Shell
 
-:one: Create the Cloud-Based Development Environment
+### 1: Create the Cloud-Based Development Environment
 
-:white_check_mark: Create a Github Repo
+:white_check_mark: Create a Github repository
 
 :white_check_mark: Launch an Azure Cloud Shell environment and create ssh-keys. Upload these keys to your GitHub account.
 
-* Go to Azure Portal -> Click Azure Cloud Shell
-* Type `ssh-keygen -t rsa` to generate a key
-![SSH Keygen](./images/sshkeygen.png)
-* `cat /home/jenny/.ssh/id_rsa.pub`
-* Copy the generated key and go to GitHub. Click the settings and paste the key.
+**Steps:**
+
+- Go to Azure Portal and  Click Azure Cloud Shell
+- Type `ssh-keygen -t rsa` to generate a key
+
+![ssh keygen](./images/sshkeygen.png)
+
+![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/sshkeygen.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/sshkeygen.png)
+
+- Type `cat /home/jenny/.ssh/id_rsa.pub` to generate the key.
+- Copy the generated key and go to GitHub. Click the settings and paste the key.
+
 ![GitHub Setting](./images/GitHubSetting.png)
-### Inspect Project File
-Since the environment is set up, we can inspect our project files and test our code locally first.
 
-We will need these four files: Makefile, requirements.txt, app.py, and make_prediction.sh. ad
+![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/GitHubSetting.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/GitHubSetting.png)
 
-In order to install and manage the framework and libraries in the requirements.txt easily, we will need to create a virtual environment for python.
+### 2. Create Project Scaffolding
 
-You can create a virtual environment like:
+The environment is set up, we can create the scaffolding for our project and test our code.
 
-```bash
-#Install the virtual command-line tool
-pip install virtualenv
+**Create the Makefile**
 
-#create a virtual environment
-virtualenv ~/.udacity-devops
-```
+Create a file named Makefile and copy the below code into it. (Remember to use tab formatting). Makefile is a handy way to create shortcuts to build, test, and deploy a project.
 
-I have created the `.udacity-devops` virtual environment in my mac, so I will simply activate it. You can double check whether which python we are using by tying "which python" in your terminal.
-
-```
-source ~/.udacity-devops/bin/activate
-```
-
-The python virtual env is set up, so we can install our packages or frameworks specified in the requirements.txt. 
-
-### Create Project Scaffolding
-
-Now that the environment is set up, we can create our Makefile for testing the hello.py.We can run our commands with the help of Makefile. Simply type `make all` to install, lint and test the packeages specified in the requirements.txt.
-```
+```makefile
 install:
     pip install --upgrade pip &&\
         pip install -r requirements.txt
@@ -68,89 +70,205 @@ lint:
 all: install lint test
 ```
 
+**Create requirements.txt**
+
+Create a file named requirements.txt. A requirements.txt is a convenient way to list what packages a project needs. Another optional best practice would be to "pin" the exact version of the package you use.
+
 ```
-make all
+pylint
+pytest
 ```
 
-![activate python virtual env](./images/activateenv.png)
+**Create the Python Virtual Environment**
 
-I have successfully installed all the packages and now I want to test whether I can run the app.py application and make housing prediction successfully in my local machine. This procedure is really important. 
-
-
-* Passing tests that are displayed after running the `make all` command from the `Makefile`
-* Output of a test run
-
-Type `Python app.py` in your terminal and run the application. 
-![Run Python app.py](./images/runpythonapp.png)  
-
-Once it is successfully, you will see Sklearn Prediction Home in your browser.
-
-![browser](./images/localhostbrowser.png)
-
-Then, we want to make sure whether we call call our ML API. We do this open another terminal and type `./make_prediction.sh` in our terminal. We will be able to see the prediction.
-
-![ml api prediction result](./images/mlapi.png)
-
-Since we get the prediction value, it means our application works perfectly on our localhost. Then we will modify the port in app.py to 443 and commit our changes to the repo.
-### Clone Project into Azure Cloud Shell
-
-* Go to Azure Portal, Click the Azure CLI, and clone the project.
-![Clone the project in Azure CLI](./images/GithubCloneProject.png)
-
-### Project running on Azure App Service
-
-Azure app service is like our localhost but it is hosted in Azure. It is like black-box localhost. Azure APP service is PaaS so we do not need to specify the OS of the virtual machines and specify its configurations. So really easy to use. We simply use it to deploy our application.
-
-To start with, we need to authorize Azure APP service. You can create a APP service from Azure Portal or in the cloud shell. I will use the Portal at the moment since I want it to be more clear and easy for me to understand.
-like
+You can create a Python virtual environment both locally and inside your Azure Cloud Shell environment. By creating the virtual environment in a home directory it won't accidentally be checked into your project.
 
 ```bash
-az webapp up -n <your-appservice>
-az webapp config set -g <your-resource-group> -n <your-appservice> --startup-file <your-startup-file-or-command>
+pip install virtualenv
+virtualenv ~/.udacity-devops
+source ~/.udacity-devops/bin/activate
 ```
 
-![authorize app service](./images/authorizewebapp.png)
-![app service is ready](./images/appserviceisready.png)
+I  created the `.udacity-devops` virtual environment in my mac, so I will simply activate it. You can check whether which python are we using by tying `which python` in your terminal.
 
-We have already authorized the Azure APP Service and then we want to use Azure pipelines to deploy our flask ML webapplications. To do so, we need to create a Azure DevOps Project and then establish a service connection for Azure Pipelines and Azure App Service. Here is the tutorial you can follow along.
+```bash
+source ~/.udacity-devops/bin/activate
+```
 
-<a href ="https://docs.microsoft.com/en-us/azure/devops/pipelines/ecosystems/python-webapp?view=azure-devops&WT.mc_id=udacity_learn-wwl">Use CI/CD to deploy a Python web app to Azure App Service on Linux</a>
+![activate env](./images/activateenv.png)
 
-After follow along the above tutorial, we will deploy our web app successful with Azure Pipelines. It will look like
+![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/activateenv.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/activateenv.png)
 
-![deploy web app with Azure Pipelines Successfully](./images/successdeploywithazurepipeline.png)
+**Create the script file and test file.**
 
-If we go to the App Service, and click the URL under the Essentials Tab , we should be able to vist it. And see it is actually hosted by azure now.
-![app service](./images/appservice.png)
+The next step is to create the script file and test file. This is a boilerplate code to get the initial continuous integration process working. It will later be replaced by the real application code.
 
-
-The successful prediction from deployed flask app in Azure Cloud Shell. The output should look similar to this:
-![azure terminal output prediction](./images/azureprediction.png)
-
-### Running Azure App Service from Azure Pipelines automatic deployment
-Now that we have set up the Azure Pipelines and deploy the Flask ML application on Azure, we want to make sure if we have made any changes on our GitHub Repo, the Azure Pipelines will be triggered and run the tasks in the pipelines and then deploy the applications automatically to Azure App Service. 
-
-So, I will go to my app.py and add my heading as Continuous Delivery Test. By doing this, I want to check if I have set up my workflow correctly, after I made changes, the Azure Pipleines will be triggered and it will deploy my new changes to the App Service. 
+First, you will need to create [hello.py](http://hello.py/) with the following code at the top level of your Github repo:
 
 ```python
-@app.route("/")
-def home():
-    html = "<h3>Sklearn Prediction Home (Continuous Delivery Test)</h3>"
-    return html.format(format)
+def toyou(x):
+    return "hi %s" % x
+
+def add(x):
+    return x + 1
+
+def subtract(x):
+    return x - 1
 ```
 
-In order to do so, we need to tell Azure Pipeline , what are the triggers, do we want it deploy the web applications when we have made any changes on our repo or when we creates a Pull Request and merge our changes in to the master branch. To make it simple here, I just want to tell the Azure Pipeline to deploy the web applications when I have made any changes on my branch. You can always modify it to be triggered by a PR.
+Next, you will need to create test_hello.py with the following code at the top level of your Github repo:
 
-![modify Azure Pipeline Trigger](./images/modifytriggers.png)
-![Trigger Azure Pipleine by Changes](./images/triggerbychanges.png)
+```python
+from hello import toyou, add, subtract
 
+def setup_function(function):
+    print("Running Setup: %s" % function.__name__)
+    function.x = 10
 
-* Output of streamed log files from deployed application
+def teardown_function(function):
+    print("Running Teardown: %s" % function.__name__)
+    del function.x
+
+### Run to see failed test
+#def test_hello_add():
+#    assert add(test_hello_add.x) == 12
+
+def test_hello_subtract():
+    assert subtract(test_hello_subtract.x) == 9
+```
+
+### 3. Local Test
+
+Now it is time to run `make all` which will install, lint, and test code. This enables us to ensure we don't check in broken code to GitHub as it installs, lints, and tests the code in one command. Later we will have a remote build server perform the same step.
+
+What is important to keep in mind is that we need to test our code locally first before we clone it to the Azure Cloud Shell. So I will install all the packages and test whether I can run the app.py application and make housing prediction successfully in my local machine first. 
+
+![make all](./images/makeall.png)
+
+![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/makeall.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/makeall.png)
+
+After running my tests locally, I want to run my python web application. Once it is successfully, you will see Sklearn Prediction Home in your browser.
+
+```python
+Python app.py
+```
+
+![run python app](./images/runpythonapp.png)
+
+![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/runpythonapp.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/runpythonapp.png)
+
+![local host browser](./images/localhostbrowser.png)
+
+![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/localhostbrowser.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/localhostbrowser.png)
+
+Then, we want to make sure whether we call call our ML API. Open another terminal and type `./make_prediction.sh` in our terminal. We will be able to see the prediction.
+
+![ml api](./images/mlapi.png)
+![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/mlapi.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/mlapi.png)
+
+Since we got the prediction value, it means our application works perfectly on our localhost. Then we will modify the port in app.py to 443 and commit our changes to the repo. 
+
+### 4. Clone Project into Azure Cloud Shell
+
+Go to Azure Portal, click the Azure CLI, and clone the project. And we can do the same steps like above in our Azure Cloud Shell.
+
+![Github clone project](./images/GithubCloneProject.png)
+
+![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/GithubCloneProject.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/GithubCloneProject.png)
+
+## Continuous Delivery on Azure
+
+This part will involve setting up Azure Pipelines to deploy the Flask starter code to Azure App Services. After we have enabled the source control integration, we can select the Azure Pipelines to build provider, and then configure the App Services permissions.
+
+### 1. Authorize Azure App Service
+
+Azure App Service is like our localhost but it is hosted in Azure. It is like a black-box localhost. Azure APP service is PaaS so we do not need to set up and maintain the Virtual Machines.It is easy to use. 
+
+To start with, we need to authorize Azure APP Service. You can create a APP Service from Azure Portal or in the Azure Cloud Shell. I will use the Portal here since it is more clear and easy for me to understand. Alternatively, you can use the script below to set up a Azure App Service in the Azure Cloud Shell.
+
+```bash
+az webapp up -n <your-appservice>az webapp config set -g <your-resource-group> -n <your-appservice> --startup-file <your-startup-file-or-command>
+```
+
+![authorize web app](./images/authorizewebapp.png)
+
+![app service is ready](./images/appserviceisready.png)
+
+![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/authorizewebapp.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/authorizewebapp.png)
+
+![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/appserviceisready.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/appserviceisready.png)
+
+## 2. Enable Continuous Deployment with Azure Pipelines
+
+Then we want to use Azure pipelines to deploy our flask ML web application. To do so, we need to create a Azure DevOps Project and then establish a service connection for Azure Pipelines and Azure App Service first. 
+
+Here is the tutorial you can follow along.
+
+[Use CI/CD to deploy a Python web app to Azure App Service on Linux](https://docs.microsoft.com/en-us/azure/devops/pipelines/ecosystems/python-webapp?view=azure-devops&WT.mc_id=udacity_learn-wwl)
+
+After that, the Flask ML Web Application is deployed successful with Azure Pipelines. 
+
+![successdeploywithazurepipeline](./images/successdeploywithazurepipeline.png)
+
+![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/successdeploywithazurepipeline.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/successdeploywithazurepipeline.png)
+
+Go to the App Service, and click the URL under the Essentials , we should be able to visit the website now. 
+
+![app service](./images/appservice.png)
+
+![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/appservice.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/appservice.png)
+
+**Verify Prediction with starter code file**
+
+Open Azure Cloud Shell, and go to our project directory. Run the `make_predict_azure_app.sh`
+
+in the CLI. Remeber to modify your app name.
+
+![azure prediction](./images/azureprediction.png)
+![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/azureprediction.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/azureprediction.png)
+
+### 3. Enable GitHub and Azure Pipelines
+
+Now that we have set up the Azure Pipelines and deploy the Flask ML application on Azure, we want to make sure when we make any changes on our GitHub Repo, the Azure Pipelines will be triggered. The piplelines will run and the applications will automatically deployed to Azure App Service.
+
+I have modified the heading for my web application. When I commit the changes to GitHub, the Azure Pipleines will be triggered and it will deploy my new changes to the App Service.
+
+```python
+@app.route("/")def home():    
+	html = "<h3>Sklearn Prediction Home (Continuous Delivery Test)</h3>"    
+	return html.format(format)
+```
+
+To do this, we need to tell Azure Pipeline what are the triggers. Whether we want to deploy the web applications when we have made any changes  or when we create a Pull Request and merge our changes to the master branch. 
+
+To make it simple here, I just want to tell the Azure Pipeline to deploy the web applicatios when I have made any changes on my branch. You can always modify it to be triggered by a PR.
+
+![modify triggers](./images/modifytriggers.png)
+
+![trigger by changes](./images/triggerbychanges.png)
+
+![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/modifytriggers.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/modifytriggers.png)
+
+![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/triggerbychanges.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/triggerbychanges.png)
+
+### **4. Stream Logs**
+
+Here is the output of streamed log files from deployed application.
+
+https://flaskmlapp.scm.azurewebsites.net/api/logs/docker
+
+![logfiles](./images/logfiles.png)
+View the log file in App Service - Log Stream
+![logfiles](./images/logstream.png)
+![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/logfiles.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/logfiles.png)
+
+![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/logstream.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/logstream.png)
 
 ## Enhancements
 
-<TODO: A short description of how to improve the project in the future>
+- This project can be enhanced by using the GitHub actions to deploy the web applications. We can utilize GitHub Actions as well as Azure Pipelines for continous delivery. Also, we can modify the pipeline and only triggers when there is a Pull Request.
+- Also, the whole process can be applied for other frameworks such as C# or Node.js.
 
-## Demo 
+## Demo
+
 <TODO: Add link Screencast on YouTube>
-
