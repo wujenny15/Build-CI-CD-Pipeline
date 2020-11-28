@@ -22,7 +22,6 @@ To deploy to App service , a service connections should be established between t
 
 ## Architectural Diagram
 ![architecture diagram](./images/architecture.png)
-![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/Architecture.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/Architecture.png)
 
 ## CI: Set Up Azure Cloud Shell
 
@@ -39,14 +38,10 @@ To deploy to App service , a service connections should be established between t
 
 ![ssh keygen](./images/sshkeygen.png)
 
-![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/sshkeygen.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/sshkeygen.png)
-
 - Type `cat /home/jenny/.ssh/id_rsa.pub` to generate the key.
 - Copy the generated key and go to GitHub. Click the settings and paste the key.
 
 ![GitHub Setting](./images/GitHubSetting.png)
-
-![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/GitHubSetting.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/GitHubSetting.png)
 
 ### 2. Create Project Scaffolding
 
@@ -97,8 +92,6 @@ source ~/.udacity-devops/bin/activate
 
 ![activate env](./images/activateenv.png)
 
-![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/activateenv.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/activateenv.png)
-
 **Create the script file and test file.**
 
 The next step is to create the script file and test file. This is a boilerplate code to get the initial continuous integration process working. It will later be replaced by the real application code.
@@ -145,8 +138,6 @@ What is important to keep in mind is that we need to test our code locally first
 
 ![make all](./images/makeall.png)
 
-![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/makeall.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/makeall.png)
-
 After running my tests locally, I want to run my python web application. Once it is successfully, you will see Sklearn Prediction Home in your browser.
 
 ```python
@@ -155,16 +146,11 @@ Python app.py
 
 ![run python app](./images/runpythonapp.png)
 
-![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/runpythonapp.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/runpythonapp.png)
-
 ![local host browser](./images/localhostbrowser.png)
-
-![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/localhostbrowser.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/localhostbrowser.png)
 
 Then, we want to make sure whether we call call our ML API. Open another terminal and type `./make_prediction.sh` in our terminal. We will be able to see the prediction.
 
 ![ml api](./images/mlapi.png)
-![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/mlapi.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/mlapi.png)
 
 Since we got the prediction value, it means our application works perfectly on our localhost. Then we will modify the port in app.py to 443 and commit our changes to the repo. 
 
@@ -173,8 +159,6 @@ Since we got the prediction value, it means our application works perfectly on o
 Go to Azure Portal, click the Azure CLI, and clone the project. And we can do the same steps like above in our Azure Cloud Shell.
 
 ![Github clone project](./images/GithubCloneProject.png)
-
-![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/GithubCloneProject.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/GithubCloneProject.png)
 
 ## Continuous Delivery on Azure
 
@@ -194,10 +178,6 @@ az webapp up -n <your-appservice>az webapp config set -g <your-resource-group> -
 
 ![app service is ready](./images/appserviceisready.png)
 
-![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/authorizewebapp.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/authorizewebapp.png)
-
-![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/appserviceisready.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/appserviceisready.png)
-
 ## 2. Enable Continuous Deployment with Azure Pipelines
 
 Then we want to use Azure pipelines to deploy our flask ML web application. To do so, we need to create a Azure DevOps Project and then establish a service connection for Azure Pipelines and Azure App Service first. 
@@ -210,13 +190,9 @@ After that, the Flask ML Web Application is deployed successful with Azure Pipel
 
 ![successdeploywithazurepipeline](./images/successdeploywithazurepipeline.png)
 
-![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/successdeploywithazurepipeline.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/successdeploywithazurepipeline.png)
-
 Go to the App Service, and click the URL under the Essentials , we should be able to visit the website now. 
 
 ![app service](./images/appservice.png)
-
-![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/appservice.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/appservice.png)
 
 **Verify Prediction with starter code file**
 
@@ -225,7 +201,6 @@ Open Azure Cloud Shell, and go to our project directory. Run the `make_predict_a
 in the CLI. Remeber to modify your app name.
 
 ![azure prediction](./images/azureprediction.png)
-![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/azureprediction.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/azureprediction.png)
 
 ### 3. Enable GitHub and Azure Pipelines
 
@@ -247,10 +222,6 @@ To make it simple here, I just want to tell the Azure Pipeline to deploy the web
 
 ![trigger by changes](./images/triggerbychanges.png)
 
-![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/modifytriggers.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/modifytriggers.png)
-
-![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/triggerbychanges.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/triggerbychanges.png)
-
 ### **4. Stream Logs**
 
 Here is the output of streamed log files from deployed application.
@@ -260,10 +231,6 @@ https://flaskmlapp.scm.azurewebsites.net/api/logs/docker
 ![logfiles](./images/logfiles.png)
 View the log file in App Service - Log Stream
 ![logfiles](./images/logstream.png)
-![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/logfiles.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/logfiles.png)
-
-![How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/logstream.png](How%20to%20Build%20A%20CI%20CD%20Pipeline%204c4c8e7abed24d54b03369d11ab5f349/logstream.png)
-
 ## Enhancements
 
 - This project can be enhanced by using the GitHub actions to deploy the web applications. We can utilize GitHub Actions as well as Azure Pipelines for continous delivery. Also, we can modify the pipeline and only triggers when there is a Pull Request.
