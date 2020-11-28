@@ -21,7 +21,7 @@ To deploy to App service , a service connections should be established between t
 [https://docs.google.com/spreadsheets/d/10TB6OXX8196cBgYHUD4E6tcd--r-CuljEN8CGN7dNSU/edit?usp=sharing](https://docs.google.com/spreadsheets/d/10TB6OXX8196cBgYHUD4E6tcd--r-CuljEN8CGN7dNSU/edit?usp=sharing)
 
 ## Architectural Diagram
-![architecture diagram](./images/architecture.png)
+![architecture diagram](./images/Architecture.png)
 
 ## CI: Set Up Azure Cloud Shell
 
