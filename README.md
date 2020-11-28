@@ -4,12 +4,6 @@
 
 This project will start with creating a scaffolding to assist in performing Continuous Integration and Continuous Delivery. And then it will use Github Actions along with a Makefile, requirements.txt and application code to perform an initial lint, test, and install cycle. Lastly, we will integrate this project with Azure Pipelines to enable Continuous Delivery to Azure App Service.
 
-push my code to GitHub
-It detects the changes
-Azure Pipleine will be triggered to run the tasks
-
-To deploy to App service , a service connections should be established between these two service first.
-
 ## Project Plan
 
 ### Trello board
@@ -238,4 +232,4 @@ View the log file in App Service - Log Stream
 
 ## Demo
 
-<TODO: Add link Screencast on YouTube>
+https://www.youtube.com/watch?v=txM_h4ZBpE0&feature=youtu.be
