@@ -8,12 +8,11 @@ This project will start with creating a scaffolding to assist in performing Cont
 
 ### Trello board
 
-[https://trello.com/b/Ua1O1dSn/create-ci-cd-pipeline](https://trello.com/b/Ua1O1dSn/create-ci-cd-pipeline)
+https://trello.com/b/Ua1O1dSn/create-ci-cd-pipeline
 
 ### Spreadsheet Project Plan
 
-[https://docs.google.com/spreadsheets/d/10TB6OXX8196cBgYHUD4E6tcd--r-CuljEN8CGN7dNSU/edit?usp=sharing](https://docs.google.com/spreadsheets/d/10TB6OXX8196cBgYHUD4E6tcd--r-CuljEN8CGN7dNSU/edit?usp=sharing)
-
+https://docs.google.com/spreadsheets/d/10TB6OXX8196cBgYHUD4E6tcd--r-CuljEN8CGN7dNSU/edit?usp=sharing
 ## Architectural Diagram
 ![architecture diagram](./images/Architecture.png)
 
@@ -153,6 +152,38 @@ Since we got the prediction value, it means our application works perfectly on o
 Go to Azure Portal, click the Azure CLI, and clone the project. And we can do the same steps like above in our Azure Cloud Shell.
 
 ![Github clone project](./images/GithubCloneProject.png)
+## CI: Configure GitHub Actions
+
+### Replace yml code
+```yaml
+name: Python application test with Github Actions
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.5
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.5
+    - name: Install dependencies
+      run: |
+        make install
+    - name: Lint with pylint
+      run: |
+        make lint
+    - name: Test with pytest
+      run: |
+        make test
+```
+![install](./images/install.png)
+![lint build test](./images/buildandtest.png)
+![clear run](./images/clearrun.png)
 
 ## Continuous Delivery on Azure
 
@@ -233,3 +264,6 @@ View the log file in App Service - Log Stream
 ## Demo
 
 https://www.youtube.com/watch?v=p5jgTdOToW0
+
+Project Status:
+![Python application test with Github Actions](https://github.com/wujenny15/Udacity-Build-CI-CD-Pipeline/workflows/Python%20application%20test%20with%20Github%20Actions/badge.svg?branch=main)
