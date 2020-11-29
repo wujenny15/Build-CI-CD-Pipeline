@@ -63,6 +63,7 @@ def predict():
         clf = joblib.load("boston_housing_prediction.joblib")
     except:
         LOG.info("JSON payload: %s", json_payload)
+        print("Coud not fint the hosing prediction file")
         return "Model not loaded"
 
     scaled_payload = scale(inference_payload)
